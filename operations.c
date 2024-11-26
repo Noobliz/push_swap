@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lisux <lisux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:39:16 by lguiet            #+#    #+#             */
-/*   Updated: 2024/11/25 17:44:32 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/11/26 10:22:07 by lisux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,50 +47,24 @@ void	add_node(t_list **stack, int value)
 		last->next = new_node;
 	}
 }
-void	sa(t_list **a)
+void	swap_top(t_list **stack)
 {
 	t_list	*tmp;
 
-	if (*a && (*a)->next)
+	if (*stack && (*stack)->next)
 	{
-		tmp = (*a)->next; // save pointeur du 2e noeud
-		(*a)->next = tmp->next;
+		tmp = (*stack)->next; // save pointeur du 2e noeud
+		(*stack)->next = tmp->next;
 		// 1er noeud saute 2e noeud pour pointer directmnt vers 3e
-		tmp->next = *a; // fait pointer 2e noeud vers 1er
-		*a = tmp;       // met la tete de liste sur l'ex 2e noeud
+		tmp->next = *stack; // fait pointer 2e noeud vers 1er
+		*stack = tmp;       // met la tete de liste sur l'ex 2e noeud
 	}
 }
-void	sb(t_list **b)
-{
-	t_list	*tmp;
 
-	if (*b && (*b)->next)
-	{
-		tmp = (*b)->next;
-		(*b)->next = tmp->next;
-		tmp->next = *b;
-		*b = tmp;
-	}
-}
 void	ss(t_list **a, t_list **b)
 {
-	t_list	*tmp;
-
-	if (*a && (*a)->next)
-	{
-		tmp = (*a)->next;
-		(*a)->next = tmp->next;
-		tmp->next = *a;
-		*a = tmp;
-	}
-	tmp = NULL;
-	if (*b && (*b)->next)
-	{
-		tmp = (*b)->next;
-		(*b)->next = tmp->next;
-		tmp->next = *b;
-		*b = tmp;
-	}
+	swap_top(a);
+	swap_top(b);
 }
 
 void	pa(t_list **a, t_list **b)
@@ -98,7 +72,7 @@ void	pa(t_list **a, t_list **b)
 	t_list	*tmp;
 
 	tmp = NULL;
-	if (*b && (*b)->next)
+	if (*b)
 	{
 		tmp = (*b)->next; // save future nouvelle tete
 		(*b)->next = *a;  // fait pointer next de b vers l'ancienne tete de a
@@ -111,7 +85,7 @@ void	pb(t_list **a, t_list **b)
 	t_list	*tmp;
 
 	tmp = NULL;
-	if (*a && (*a)->next)
+	if (*a)
 	{
 		tmp = (*a)->next;
 		(*a)->next = *b;
@@ -119,101 +93,46 @@ void	pb(t_list **a, t_list **b)
 		*a = tmp;
 	}
 }
-void	ra(t_list **a)
+void	rotate(t_list **stack)
 {
 	t_list	*tmp;
 	t_list	*new_head;
 
-	if (*a && (*a)->next)
+	if (*stack && (*stack)->next)
 	{
-		new_head = (*a)->next;
-		tmp = (*a);
-		while ((*a)->next)
-			*a = (*a)->next;
-		tmp->next = NULL;
-		(*a)->next = tmp;
-		*a = new_head;
+		new_head = (*stack)->next;
+		tmp = (*stack);
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = *stack; //attache l'ancienne tete à la fin
+		(*stack)->next = NULL; // coupe le lien
+		*stack = new_head;
 	}
 }
-void	rb(t_list **b)
-{
-	t_list	*tmp;
-	t_list	*new_head;
 
-	if (*b && (*b)->next)
-	{
-		new_head = (*b)->next;
-		tmp = (*b);
-		while ((*b)->next)
-			*b = (*b)->next;
-		tmp->next = NULL;
-		(*b)->next = tmp;
-		*b = new_head;
-	}
-}
 void	rr(t_list **a, t_list **b)
 {
-	t_list	*tmp;
-	t_list	*new_head;
-
-	if (*a && (*a)->next)
-	{
-		new_head = (*a)->next;
-		tmp = (*a);
-		while ((*a)->next)
-			*a = (*a)->next;
-		tmp->next = NULL;
-		(*a)->next = tmp;
-		*a = new_head;
-	}
-	if (*b && (*b)->next)
-	{
-		new_head = (*b)->next;
-		tmp = (*b);
-		while ((*b)->next)
-			*b = (*b)->next;
-		tmp->next = NULL;
-		(*b)->next = tmp;
-		*b = new_head;
-	}
+	rotate(a);
+	rotate(b);
 }
 
-// void(t_list **a, int mode) mode = 0 A, mode = 1 stack b,
-// 							mode = 2 les 2
 
-// 	void rrr(t_list * *a, t_list **b)
-// {
-// 	reverse_rotate(a);
-// 	reverse_rotate(b);
-// }
-
-void	reverse_rotate(t_list **a)
+void	reverse_rotate(t_list **stack)
 {
 	t_list	*tmp;
 	t_list	*prev;
 
-	if (!a)
+	if (!stack || !(*stack) || !(*stack)->next)
 		return ;
-	tmp = *a;
-	if (!tmp && !tmp->next)
-		return ;
+	tmp = *stack;
 	while (tmp->next)
 	{
 		prev = tmp;
 		tmp = tmp->next;
 	}
-	tmp->next = *a;
+	tmp->next = *stack;
 	prev->next = NULL;
-	*a = tmp;
-	// t_list	*tmp2;
-	// {
-	// 	sec_node = (*a)->next;
-	// 	tmp = (*a);
-	// 	while (tmp->next)
-	// 		tmp = tmp->next;
-	// 	*a = tmp;
-	// 	(*a)->next = sec_node;
-	// }
+	*stack = tmp;
 }
 void	print_stack(t_list *stack)
 {
