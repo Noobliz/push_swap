@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lisux <lisux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:39:16 by lguiet            #+#    #+#             */
-/*   Updated: 2024/11/26 16:47:23 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/11/28 11:12:29 by lisux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,28 @@ void	sort_three(t_list **stack)
 		if (first > second && second < third)
 			swap_top(stack);
 	}
+}
+int	find_smallest(t_list *stack)
+{
+	int	min;
+	int	i;
+	int	pos;
+
+	min = stack->content;
+	i = 0;
+	pos = 0;
+
+	while(stack)
+	{
+		if(stack->content < min)
+		{
+			min = stack->content;
+			pos = i;
+		}
+		stack = stack->next;
+		i++;
+	}
+	return (pos);
 }
 //________________________________________TEST SORT_THREE
 int	main(int argc, char **argv)
