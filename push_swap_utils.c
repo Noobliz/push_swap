@@ -6,21 +6,29 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:00:52 by lguiet            #+#    #+#             */
-/*   Updated: 2024/11/28 16:04:23 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/06 17:05:43 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "LIBFT/libft.h"
 #include "push_swap.h"
 
-int	ft_isdigit(int c)
+int	over_min_max(long int result, int sign)
 {
-	return (c >= '0' && c <= '9');
+	if ((result * sign) > 2147483647 || (result * sign) < -2147483648)
+	{
+		write(1, "Error\n", 6);
+		return (0);
+	}
+	else
+		return (1);
 }
-int	ft_atoi(const char *str)
+
+long	upgraded_atol(const char *str)
 {
-	int	sign;
-	int	i;
-	int	result;
+	int			sign;
+	long int	i;
+	long int	result;
 
 	sign = 1;
 	i = 0;
@@ -40,24 +48,26 @@ int	ft_atoi(const char *str)
 		result = result * 10 + (str[i] - '0');
 		i++;
 	}
+	if (over_min_max(result, sign) == 0)
+		return (0);
 	return (result * sign);
 }
 
-t_list	*create_node(int value)
+t_stack	*create_node(int value)
 {
-	t_list	*node;
+	t_stack	*node;
 
-	node = malloc(sizeof(t_list));
+	node = malloc(sizeof(t_stack));
 	if (!node)
 		return (NULL);
 	node->content = value;
 	node->next = NULL;
 	return (node);
 }
-void	add_node(t_list **stack, int value)
+void	add_node(t_stack **stack, int value)
 {
-	t_list	*new_node;
-	t_list	*last;
+	t_stack	*new_node;
+	t_stack	*last;
 
 	last = NULL;
 	new_node = create_node(value);
@@ -71,12 +81,25 @@ void	add_node(t_list **stack, int value)
 		last->next = new_node;
 	}
 }
-void	print_stack(t_list *stack)
+void	print_stack(t_stack *stack)
 {
 	while (stack)
 	{
-		printf("%d -> ", stack->content);
+		printf("%ld -> ", stack->content);
 		stack = stack->next;
 	}
 	printf("NULL\n");
+}
+void	n_lstclear(t_stack **lst)
+{
+	t_stack	*temp;
+
+	if (!lst || !(*lst))
+		return ;
+	while (*lst)
+	{
+		temp = (*lst)->next;
+		free((*lst));
+		*lst = temp;
+	}
 }

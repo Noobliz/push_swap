@@ -6,15 +6,16 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:50:22 by lguiet            #+#    #+#             */
-/*   Updated: 2024/11/28 15:59:45 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/06 14:50:09 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "LIBFT/libft.h"
 #include "push_swap.h"
 
-void	swap_top(t_list **stack)
+void	swap_top(t_stack **stack)
 {
-	t_list	*tmp;
+	t_stack	*tmp;
 
 	if (*stack && (*stack)->next)
 	{
@@ -27,15 +28,15 @@ void	swap_top(t_list **stack)
 	printf("sa\n");
 }
 
-void	ss(t_list **a, t_list **b)
+void	ss(t_stack **a, t_stack **b)
 {
 	swap_top(a);
 	swap_top(b);
 }
 
-void	pa(t_list **a, t_list **b)
+void	pa(t_stack **a, t_stack **b)
 {
-	t_list	*tmp;
+	t_stack	*tmp;
 
 	tmp = NULL;
 	if (*b)
@@ -47,9 +48,9 @@ void	pa(t_list **a, t_list **b)
 	}
 	printf("pa\n");
 }
-void	pb(t_list **a, t_list **b)
+void	pb(t_stack **a, t_stack **b)
 {
-	t_list	*tmp;
+	t_stack	*tmp;
 
 	tmp = NULL;
 	if (*a)
@@ -61,49 +62,85 @@ void	pb(t_list **a, t_list **b)
 	}
 	printf("pb\n");
 }
-void	rotate(t_list **stack)
+void	ra(t_stack **a)
 {
-	t_list	*tmp;
-	t_list	*new_head;
+	t_stack	*tmp;
+	t_stack	*new_head;
 
-	if (*stack && (*stack)->next)
+	if (*a && (*a)->next)
 	{
-		new_head = (*stack)->next;
-		tmp = (*stack);
+		new_head = (*a)->next;
+		tmp = (*a);
 		while (tmp->next)
 			tmp = tmp->next;
-		tmp->next = *stack;    // attache l'ancienne tete à la fin
-		(*stack)->next = NULL; // coupe le lien
-		*stack = new_head;
+		tmp->next = *a;    // attache l'ancienne tete à la fin
+		(*a)->next = NULL; // coupe le lien
+		*a = new_head;
 	}
-	printf("rotate\n");
+	write(1, "ra\n", 3);
+}
+void	rb(t_stack **b)
+{
+	t_stack	*tmp;
+	t_stack	*new_head;
+
+	if (*b && (*b)->next)
+	{
+		new_head = (*b)->next;
+		tmp = (*b);
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = *b;    // attache l'ancienne tete à la fin
+		(*b)->next = NULL; // coupe le lien
+		*b = new_head;
+	}
+	write(1, "rb\n", 3);
 }
 
-void	rr(t_list **a, t_list **b)
+void	rr(t_stack **a, t_stack **b)
 {
-	rotate(a);
-	rotate(b);
+	ra(a);
+	rb(b);
 }
 
-void	reverse_rotate(t_list **stack)
+void	rra(t_stack **a)
 {
-	t_list	*tmp;
-	t_list	*prev;
+	t_stack	*tmp;
+	t_stack	*prev;
 
-	if (!stack || !(*stack) || !(*stack)->next)
+	if (!(*a) || !(*a)->next)
 		return ;
-	tmp = *stack;
+	tmp = *a;
 	while (tmp->next)
 	{
 		prev = tmp;
 		tmp = tmp->next;
 	}
-	tmp->next = *stack;
+	tmp->next = *a;
 	prev->next = NULL;
-	*stack = tmp;
+	*a = tmp;
+	write(1, "rra\n", 4);
 }
-void	rrr(t_list **a, t_list **b)
+void	rrb(t_stack **b)
 {
-	reverse_rotate(a);
-	reverse_rotate(b);
+	t_stack	*tmp;
+	t_stack	*prev;
+
+	if (*b || !(*b) || !(*b)->next)
+		return ;
+	tmp = *b;
+	while (tmp->next)
+	{
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	tmp->next = *b;
+	prev->next = NULL;
+	*b = tmp;
+	write(1, "rrb\n", 4);
+}
+void	rrr(t_stack **a, t_stack **b)
+{
+	rra(a);
+	rrb(b);
 }
