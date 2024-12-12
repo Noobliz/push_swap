@@ -6,7 +6,7 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:39:16 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/06 17:25:34 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/12 14:08:28 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,22 @@ void	sort_three(t_stack **stack)
 	first = (*stack)->content;
 	second = (*stack)->next->content;
 	third = (*stack)->next->next->content;
-	while (!(first < second && second < third))
+	if (first > second && first > third)
 	{
-		first = (*stack)->content;
-		second = (*stack)->next->content;
-		third = (*stack)->next->next->content;
-		if (first > second && first > third)
-			ra(stack);
-		if (first < second && second > third)
-		{
-			swap_top(stack);
-			ra(stack);
-		}
-		if (first > second && second < third)
-			swap_top(stack);
+		ra(stack);
+		write(2, "ra\n", 3);
 	}
+	else if (second > first && second > third)
+	{
+		rra(stack);
+		write(2, "rra\n", 4);
+	}
+	first = (*stack)->content;
+	second = (*stack)->next->content;
+	if (first > second)
+		swap_top(stack);
 }
+
 int	find_smallest(t_stack *stack)
 {
 	int	min;
@@ -63,6 +63,18 @@ int	find_smallest(t_stack *stack)
 	}
 	return (pos);
 }
+int	stack_size(t_stack *stack)
+{
+	int	size;
+
+	size = 0;
+	while (stack)
+	{
+		stack = stack->next;
+		size++;
+	}
+	return (size);
+}
 void	move_small_to_top(t_stack **stack, int pos)
 {
 	t_stack	*tmp;
@@ -72,11 +84,7 @@ void	move_small_to_top(t_stack **stack, int pos)
 	size = 0;
 	if (pos == 0)
 		return ;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		size++;
-	}
+	size = stack_size(*stack);
 	if (pos <= size / 2)
 	{
 		while (pos > 0)
@@ -132,15 +140,81 @@ void	sort_upto_five(t_stack **a, t_stack **b, int size)
 		move_small_to_top(a, pos);
 	}
 }
-void	free_conc(char **s1, int x)
+void	free_char_array(char **array)
 {
-	while (x >= 0)
+	int	i;
+
+	if (!array)
+		return ;
+	i = 0;
+	while (array[i])
 	{
-		free(s1[x]);
-		x--;
+		free(array[i]);
+		i++;
 	}
-	free(s1);
+	free(array);
 }
+
+void	init_struct(t_cost *data)
+{
+	data->ra = 0;
+	data->rb = 0;
+	data->rr = 0;
+	data->rra = 0;
+	data->rrb = 0;
+	data->rrr = 0;
+	data->total_cost = 0;
+}
+
+int	main(int argc, char **argv)
+{
+	char	**conc_argv;
+	t_stack	*alpha;
+	t_stack	*beta;
+	t_stack	*best;
+	t_cost	data;
+
+	best = NULL;
+	alpha = NULL;
+	beta = NULL;
+	init_struct(&data);
+	if (argc > 1)
+	{
+		// Parsing du tableau
+		conc_argv = parse_arguments(argc, argv);
+		if (!conc_argv)
+			return (0);
+		// Parsing de la liste
+		alpha = create_stack_from_args(conc_argv);
+		free_char_array(conc_argv); // Libère `conc_argv` après son utilisation
+		if (!alpha)
+			return (0);
+		if (is_sorted(alpha))
+		{
+			print_stack(alpha);
+			n_lstclear(&alpha);
+			return (0);
+		}
+		// Trie les éléments
+		printf("avant\n");
+		print_stack(alpha);
+		// pb(&alpha, &beta);
+		// pb(&alpha, &beta);
+		// pb(&alpha, &beta);
+		// print_stack(beta);
+		// best = best_move(alpha, beta);
+		// printf("\n best content = %ld", best->content);
+		// sort_upto_five(&alpha, &beta, stack_size(alpha));
+		push_swap(&alpha, &beta);
+		printf("\napres\n");
+		print_stack(alpha);
+		// Libère les listes
+		n_lstclear(&alpha);
+		n_lstclear(&beta);
+	}
+	return (0);
+}
+/*
 int	main(int argc, char **argv)
 {
 	int		i;
@@ -156,7 +230,8 @@ int	main(int argc, char **argv)
 	conc_argv = ft_split(ft_concat_arg(argc, argv), ' ');
 	// if (!(conc_argv))
 	// {
-	// 	write(1, "Error\n", 6);
+	//	free_char_array(conc_argv);
+	// 	write(2, "Error\n", 6);
 	// 	return (0);
 	// }
 	i = 0;
@@ -168,21 +243,35 @@ int	main(int argc, char **argv)
 	if (argc > 1)
 	{
 		if (valid_param(conc_argv) == 0)
+		{
+			free_char_array(conc_argv);
 			return (0);
+		}
 		while (conc_argv[i])
 		{
 			if (!(ft_too_long(conc_argv[i]) == 1))
+			{
+				free_char_array(conc_argv);
 				return (0);
+			}
 			if (upgraded_atol(conc_argv[i]) == 0)
+			{
+				free_char_array(conc_argv);
 				return (0);
+			}
 			add_node(&alpha, upgraded_atol(conc_argv[i]));
 			i++;
 		}
+		free_char_array(conc_argv);
 		if (!(duplicated_nb(alpha)))
+		{
+			n_lstclear(&alpha);
 			return (0);
+		}
 		if (is_sorted(alpha))
 		{
 			print_stack(alpha);
+			n_lstclear(&alpha);
 			return (0);
 		}
 		printf("avant\n");
@@ -194,6 +283,7 @@ int	main(int argc, char **argv)
 		n_lstclear(&beta);
 	}
 }
+*/
 //________________________________________TEST SORT_THREE
 // int	main(int argc, char **argv)
 // {

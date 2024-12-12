@@ -6,7 +6,7 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:50:22 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/06 14:50:09 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:06:47 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	swap_top(t_stack **stack)
 		tmp->next = *stack; // fait pointer 2e noeud vers 1er
 		*stack = tmp;       // met la tete de liste sur l'ex 2e noeud
 	}
-	printf("sa\n");
+	write(1, "sa\n", 3);
 }
 
 void	ss(t_stack **a, t_stack **b)
@@ -46,7 +46,7 @@ void	pa(t_stack **a, t_stack **b)
 		*a = *b;          // new tete de a
 		*b = tmp;         // new tete de b
 	}
-	printf("pa\n");
+	write(1, "pa\n", 3);
 }
 void	pb(t_stack **a, t_stack **b)
 {
@@ -60,7 +60,7 @@ void	pb(t_stack **a, t_stack **b)
 		*b = *a;
 		*a = tmp;
 	}
-	printf("pb\n");
+	write(1, "pb\n", 3);
 }
 void	ra(t_stack **a)
 {
@@ -77,7 +77,7 @@ void	ra(t_stack **a)
 		(*a)->next = NULL; // coupe le lien
 		*a = new_head;
 	}
-	write(1, "ra\n", 3);
+	// write(2, "ra\n", 3);
 }
 void	rb(t_stack **b)
 {
@@ -94,7 +94,7 @@ void	rb(t_stack **b)
 		(*b)->next = NULL; // coupe le lien
 		*b = new_head;
 	}
-	write(1, "rb\n", 3);
+	// write(2, "rb\n", 3);
 }
 
 void	rr(t_stack **a, t_stack **b)
@@ -119,14 +119,14 @@ void	rra(t_stack **a)
 	tmp->next = *a;
 	prev->next = NULL;
 	*a = tmp;
-	write(1, "rra\n", 4);
+	// write(2, "rra\n", 4);
 }
 void	rrb(t_stack **b)
 {
 	t_stack	*tmp;
 	t_stack	*prev;
 
-	if (*b || !(*b) || !(*b)->next)
+	if (!(*b) || !(*b)->next)
 		return ;
 	tmp = *b;
 	while (tmp->next)
@@ -137,7 +137,7 @@ void	rrb(t_stack **b)
 	tmp->next = *b;
 	prev->next = NULL;
 	*b = tmp;
-	write(1, "rrb\n", 4);
+	// write(2, "rrb\n", 4);
 }
 void	rrr(t_stack **a, t_stack **b)
 {

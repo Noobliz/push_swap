@@ -1,7 +1,7 @@
 NAME = push_swap
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g #REMOVE FLAG GDB
 
 OBJ_DIR = obj
 LIBFT = LIBFT/libft.a
@@ -10,12 +10,14 @@ SRCS = \
 	parsing.c \
 	push_swap_operators.c \
 	sorting.c \
-	push_swap_utils.c
+	push_swap_utils.c \
+	algo.c
 
 OBJS = \
 	$(OBJ_DIR)/parsing.o \
 	$(OBJ_DIR)/push_swap_operators.o \
 	$(OBJ_DIR)/sorting.o \
+	$(OBJ_DIR)/algo.o \
 	$(OBJ_DIR)/push_swap_utils.o
 
 # Cible par défaut
