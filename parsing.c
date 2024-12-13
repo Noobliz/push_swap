@@ -6,68 +6,12 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:36:38 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/09 17:06:57 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/13 13:54:33 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "LIBFT/libft.h"
 #include "push_swap.h"
-
-int	check_empty(char **argv)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (argv[i])
-	{
-		j = 0;
-		if (argv[i][0] == '\0')
-			return (0);
-		while (argv[i][j] == ' ')
-			j++;
-		if (argv[i][j] == '\0')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	is_sign(char c)
-{
-	return (c == '-' || c == '+');
-}
-
-int	valid_param(char **argv)
-{
-	int	i;
-	int	j;
-	int	digit;
-
-	i = 0;
-	while (argv[i])
-	{
-		digit = 0;
-		j = 0;
-		while (argv[i][j])
-		{
-			if ((is_sign(argv[i][j])) && (j > 0 && argv[i][j - 1] != ' '))
-				// signe invalide
-				return (0);
-			if ((argv[i][j] < '0' || argv[i][j] > '9') && argv[i][j] != ' '
-				&& argv[i][j] != '-' && argv[i][j] != '+')
-				// caracteres invalides
-				return (0);
-			if (ft_isdigit(argv[i][j]))
-				digit++;
-			j++;
-		}
-		if (digit == 0)
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 int	duplicated_nb(t_stack *a)
 {
@@ -89,21 +33,6 @@ int	duplicated_nb(t_stack *a)
 	return (1);
 }
 
-int	is_sorted(t_stack *a)
-{
-	t_stack	*tmp;
-
-	tmp = a;
-	if (!a)
-		return (0);
-	while (tmp->next)
-	{
-		if (tmp->content > tmp->next->content)
-			return (0);
-		tmp = tmp->next;
-	}
-	return (1);
-}
 int	ft_too_long(char *nptr)
 {
 	int	i;
@@ -132,27 +61,13 @@ int	ft_too_long(char *nptr)
 }
 
 //_________________________________________________________concat all args ensemble
-int	calculate_total_length(int argc, char **argv)
-{
-	int	i;
-	int	total_len;
-
-	i = 1;
-	total_len = 0;
-	while (i < argc)
-	{
-		total_len += ft_strlen(argv[i]) + 1; // +1 pour les espaces
-		i++;
-	}
-	return (total_len);
-}
 
 char	*ft_concat_arg(int argc, char **argv)
 {
 	int		i;
 	char	*big_str;
 
-	big_str = malloc(sizeof(char) * calculate_total_length(argc, argv));
+	big_str = malloc(sizeof(char) * calculate_total_length(argc, argv) + 1);
 	if (!big_str)
 		return (NULL);
 	big_str[0] = '\0'; // Initialisation pour `ft_strcat`
@@ -171,15 +86,6 @@ char	*ft_concat_arg(int argc, char **argv)
 	return (big_str);
 }
 //_________________________________________________________CHECK INT MAX MIN
-int	over_min_max(long int result, int sign)
-{
-	if ((result * sign) > 2147483647 || (result * sign) < -2147483648)
-	{
-		write(2, "Error\n", 6);
-		return (0);
-	}
-	return (1);
-}
 
 int	skip_whitespace_and_get_sign(const char *str, long *index)
 {
@@ -236,7 +142,7 @@ char	**parse_arguments(int argc, char **argv)
 	if (!concatenated)
 		return (NULL);
 	conc_argv = ft_split(concatenated, ' ');
-	free(concatenated); // Libérer la chaîne concaténée après usage
+	free(concatenated);
 	if (!conc_argv || !valid_param(conc_argv) || !check_empty(argv))
 	{
 		free_char_array(conc_argv);

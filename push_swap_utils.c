@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisux <lisux@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:00:52 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/06 18:27:59 by lisux            ###   ########.fr       */
+/*   Updated: 2024/12/13 13:20:56 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "LIBFT/libft.h"
 #include "push_swap.h"
-
 
 t_stack	*create_node(int value)
 {
@@ -46,7 +45,7 @@ void	print_stack(t_stack *stack)
 {
 	while (stack)
 	{
-		printf("%ld -> ", stack->content);
+		printf("%d -> ", stack->content);
 		stack = stack->next;
 	}
 	printf("NULL\n");
@@ -63,4 +62,28 @@ void	n_lstclear(t_stack **lst)
 		free((*lst));
 		*lst = temp;
 	}
+}
+void	init_struct(t_cost *data)
+{
+	data->ra = 0;
+	data->rb = 0;
+	data->rr = 0;
+	data->rra = 0;
+	data->rrb = 0;
+	data->rrr = 0;
+	data->total_cost = 0;
+}
+void	free_char_array(char **array)
+{
+	int	i;
+
+	if (!array)
+		return ;
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
 }

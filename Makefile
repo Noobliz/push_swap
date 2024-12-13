@@ -9,16 +9,24 @@ LIBFT = LIBFT/libft.a
 SRCS = \
 	parsing.c \
 	push_swap_operators.c \
-	sorting.c \
+	sort_small.c \
 	push_swap_utils.c \
-	algo.c
+	algo.c \
+	algo_utils.c \
+	main.c \
+	counting.c \
+	parsing_utils.c
 
 OBJS = \
 	$(OBJ_DIR)/parsing.o \
 	$(OBJ_DIR)/push_swap_operators.o \
-	$(OBJ_DIR)/sorting.o \
+	$(OBJ_DIR)/sort_small.o \
 	$(OBJ_DIR)/algo.o \
-	$(OBJ_DIR)/push_swap_utils.o
+	$(OBJ_DIR)/push_swap_utils.o \
+	$(OBJ_DIR)/parsing_utils.o \
+	$(OBJ_DIR)/algo_utils.o \
+	$(OBJ_DIR)/counting.o \
+	$(OBJ_DIR)/main.o
 
 # Cible par défaut
 all: $(LIBFT) $(NAME)
