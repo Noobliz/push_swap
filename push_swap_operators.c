@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_operators.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lisux <lisux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:50:22 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/13 14:34:14 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/13 18:43:12 by lisux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "LIBFT/libft.h"
+
 #include "push_swap.h"
 
 void	swap_top(t_stack **stack)

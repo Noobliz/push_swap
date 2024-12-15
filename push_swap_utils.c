@@ -3,16 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lisux <lisux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:00:52 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/13 13:20:56 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/13 19:05:42 by lisux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "LIBFT/libft.h"
 #include "push_swap.h"
+int	stack_size(t_stack *stack)
+{
+	int	size;
 
+	size = 0;
+	while (stack)
+	{
+		stack = stack->next;
+		size++;
+	}
+	return (size);
+}
 t_stack	*create_node(int value)
 {
 	t_stack	*node;

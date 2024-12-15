@@ -3,20 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   counting.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lisux <lisux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 14:05:17 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/13 14:46:00 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/15 17:05:56 by lisux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "LIBFT/libft.h"
+
 #include "push_swap.h"
 
 int	value_index(t_stack *stack, int value)
 {
 	int	index;
+	t_stack	*tail;
 
+	tail = stack;
+	//while(tail->next) // CHECK THE CASE FOR EDGE VALUES IN STACK B
+		//tail=tail->next;
+	if((value == stack->content)) // || (value > stack->content && value < tail->content))
+		return (0);
 	index = 0;
 	while (stack)
 	{
@@ -34,17 +40,22 @@ int	get_insert_position(t_stack *b, int value)
 	int		pos;
 	int		size;
 	t_stack	*current;
+	t_stack	*tail;
 
 	size = stack_size(b);
 	current = b;
-	pos = 1;
-	if (!current)
+	tail = b;
+
+	while(tail->next) // CHECK THE CASE FOR EDGE VALUES
+		tail=tail->next;
+	pos = 1; // CHECK IF 1 OR 0
+	if ((!current) || (value > current->content && value < tail->content)) //|| (value < current->content && value > tail->content))
 		return (0);
 	if (value > ft_max(b) || value < ft_min(b))
 		return (value_index(b, ft_max(b)));
 	while (current->next)
 	{
-		if (value < current->content && value > current->next->content)
+		if ((value < current->content && value > current->next->content)) // || (value < current->content && current->next == NULL))
 			// si bonne position break
 			break ;
 		pos++;
@@ -62,9 +73,9 @@ t_cost	calculate_cost(t_stack *a, t_stack *b, int value)
 	size_a = stack_size(a);
 	size_b = stack_size(b);
 	cost.ra = value_index(a, value);
-	cost.rra = size_a - cost.ra; // size - index
+	cost.rra = (size_a) - cost.ra; // size - index
 	cost.rb = get_insert_position(b, value);
-	cost.rrb = size_b - cost.rb;
+	cost.rrb = (size_b) - cost.rb;
 	cost.total_cost = min_op(max_op(cost.ra, cost.rb), max_op(cost.rra,
 				cost.rrb));
 	return (cost);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lisux <lisux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:53:03 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/13 14:04:46 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/15 17:25:09 by lisux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int					stack_size(t_stack *stack);
 //--------------------------------------------------PARSING UTILS
 int					check_empty(char **argv);
 int					is_sign(char c);
-int					is_sorted(t_stack *a);
+//int					is_sorted(t_stack *a);
 int					calculate_total_length(int argc, char **argv);
 int					over_min_max(long int result, int sign);
 int					valid_param(char **argv);
@@ -71,7 +71,7 @@ char				**parse_arguments(int argc, char **argv);
 t_stack				*create_stack_from_args(char **args);
 //-------------------------------------------------------------------ALGO
 void				push_swap(t_stack **a, t_stack **b);
-void				execute_best_move(t_stack **a, t_stack **b);
+int				execute_best_move(t_stack **a, t_stack **b);
 void				sort_three(t_stack **stack);
 t_stack				*best_move(t_stack *a, t_stack *b);
 t_cost				calculate_cost(t_stack *a, t_stack *b, int value);
