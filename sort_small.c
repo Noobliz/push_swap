@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sorting.c                                          :+:      :+:    :+:   */
+/*   sort_small.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:39:16 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/13 13:18:39 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/13 15:01:41 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,7 @@ int	find_smallest(t_stack *stack)
 	}
 	return (pos);
 }
-int	stack_size(t_stack *stack)
-{
-	int	size;
 
-	size = 0;
-	while (stack)
-	{
-		stack = stack->next;
-		size++;
-	}
-	return (size);
-}
 void	move_small_to_top(t_stack **stack, int pos)
 {
 	t_stack	*tmp;

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisux <lisux@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:00:52 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/13 19:05:42 by lisux            ###   ########.fr       */
+/*   Updated: 2024/12/16 13:04:33 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
 int	stack_size(t_stack *stack)
 {
 	int	size;
@@ -77,10 +78,8 @@ void	init_struct(t_cost *data)
 {
 	data->ra = 0;
 	data->rb = 0;
-	data->rr = 0;
 	data->rra = 0;
 	data->rrb = 0;
-	data->rrr = 0;
 	data->total_cost = 0;
 }
 void	free_char_array(char **array)
