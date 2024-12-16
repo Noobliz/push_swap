@@ -6,7 +6,7 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:53:03 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/16 13:03:07 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/16 15:24:30 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int					check_empty(char **argv);
 int					is_sign(char c);
 int					is_sorted(t_stack *a);
 int					calculate_total_length(int argc, char **argv);
-int					over_min_max(long int result, int sign);
+int					over_min_max(long int result);
 int					valid_param(char **argv);
 
 //----------------------------------------------------PARSING

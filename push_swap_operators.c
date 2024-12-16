@@ -6,7 +6,7 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:50:22 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/16 13:00:13 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/16 14:36:52 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	swap_top(t_stack **stack)
 		tmp->next = *stack; // fait pointer 2e noeud vers 1er
 		*stack = tmp;       // met la tete de liste sur l'ex 2e noeud
 	}
-	write(1, "sb\n", 3);
+	write(1, "sa\n", 3);
 }
 
 void	ss(t_stack **a, t_stack **b)

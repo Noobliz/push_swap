@@ -6,7 +6,7 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:17:33 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/16 13:08:44 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/16 15:05:47 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,12 @@ int	main(int argc, char **argv)
 			n_lstclear(&alpha);
 			return (0);
 		}
-		// while (argv[i])
-		// 	{
-		// 		add_node(&alpha, atoi(argv[i]));
-		// 		i++;
-		// 	}
 		printf("avant\n");
 		print_stack(alpha);
 
 		push_swap(&alpha, &beta);
-		// printf("\napres\n");
-		// print_stack(alpha);
+		printf("\napres\n");
+		print_stack(alpha);
 		n_lstclear(&alpha);
 		n_lstclear(&beta);
 		return (0);

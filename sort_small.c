@@ -6,7 +6,7 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:39:16 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/13 15:01:41 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/16 14:36:16 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ void	sort_three(t_stack **stack)
 	if (first > second && first > third)
 	{
 		ra(stack);
-		write(2, "ra\n", 3);
+		write(1, "ra\n", 3);
 	}
 	else if (second > first && second > third)
 	{
 		rra(stack);
-		write(2, "rra\n", 4);
+		write(1, "rra\n", 4);
 	}
 	first = (*stack)->content;
 	second = (*stack)->next->content;
