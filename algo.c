@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   algo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lisux <lisux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 12:34:54 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/16 17:19:26 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/17 10:10:16 by lisux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	execute_ra_rb(t_cost *cost, t_stack **a, t_stack **b, int *count)
+int	execute_ra_rb(t_cost *cost, t_stack **a, t_stack **b)
 {
+	int count = 0;
 	while (cost->ra > 0 && cost->rb > 0)
 	{
 		rr(a, b);
@@ -36,9 +37,11 @@ void	execute_ra_rb(t_cost *cost, t_stack **a, t_stack **b, int *count)
 		cost->rb--;
 		count++;
 	}
+	return(count);
 }
-void	execute_ra_rrb(t_cost *cost, t_stack **a, t_stack **b, int *count)
+int	execute_ra_rrb(t_cost *cost, t_stack **a, t_stack **b)
 {
+	int count = 0;
 	while (cost->ra > 0)
 	{
 		ra(a);
@@ -53,9 +56,12 @@ void	execute_ra_rrb(t_cost *cost, t_stack **a, t_stack **b, int *count)
 		cost->rrb--;
 		count++;
 	}
+		return(count);
+
 }
-void	execute_rra_rb(t_cost *cost, t_stack **a, t_stack **b, int *count)
+int	execute_rra_rb(t_cost *cost, t_stack **a, t_stack **b)
 {
+	int count = 0;
 	while (cost->rra > 0)
 	{
 		rra(a);
@@ -70,9 +76,12 @@ void	execute_rra_rb(t_cost *cost, t_stack **a, t_stack **b, int *count)
 		cost->rb--;
 		count++;
 	}
+		return(count);
+
 }
-void	execute_rra_rrb(t_cost *cost, t_stack **a, t_stack **b, int *count)
+int	execute_rra_rrb(t_cost *cost, t_stack **a, t_stack **b)
 {
+	int	count = 0;
 	while (cost->rra > 0 && cost->rrb > 0)
 	{
 		rrr(a, b);
@@ -95,6 +104,7 @@ void	execute_rra_rrb(t_cost *cost, t_stack **a, t_stack **b, int *count)
 		cost->rrb--;
 		count++;
 	}
+	return(count);
 }
 int	execute_best_move(t_stack **a, t_stack **b)
 {
@@ -106,17 +116,18 @@ int	execute_best_move(t_stack **a, t_stack **b)
 	best = best_move(*a, *b);
 	cost = calculate_cost(*a, *b, best->content);
 	if (cost.ra <= cost.rra && cost.rb <= cost.rrb)
-		execute_ra_rb(&cost, a, b, &count);
+		count+= execute_ra_rb(&cost, a, b);
 	else if (cost.ra <= cost.rra && cost.rb >= cost.rrb)
-		execute_ra_rrb(&cost, a, b, &count);
+		count += execute_ra_rrb(&cost, a, b);
 	else if (cost.ra >= cost.rra && cost.rb <= cost.rrb)
-		execute_rra_rb(&cost, a, b, &count);
+		count += execute_rra_rb(&cost, a, b);
 	else if (cost.ra >= cost.rra && cost.rb >= cost.rrb)
-		execute_rra_rrb(&cost, a, b, &count);
+		count += execute_rra_rrb(&cost, a, b);
 	pb(a, b);
 	count++;
 	printf("stack b after pushing : ");
 	print_stack(*b);
+	printf("%d\n", count);
 	return (count);
 }
 int	place_big_to_top(t_stack **b)
@@ -151,37 +162,74 @@ int	place_big_to_top(t_stack **b)
 	}
 	return (count);
 }
+int	place_small_to_top(t_stack **a)
+{
+	int	size;
+	int	index;
+	int	count;
+
+	count = 0;
+	size = stack_size(*a);
+	index = value_index(*a, ft_min(*a));
+	if (index <= (size / 2))
+	{
+		while (index > 0)
+		{
+			ra(a);
+			index--;
+			count++;
+			write(1, "ra\n", 3);
+		}
+	}
+	else if (index > (size / 2))
+	{
+		index = size - index;
+		while (index > 0)
+		{
+			rra(a);
+			index--;
+			count++;
+			write(1, "rra\n", 4);
+		}
+	}
+	return (count);
+}
 int	push_back_to_a(t_stack **a, t_stack **b)
 {
 	t_stack	*tail;
 	t_stack	*current_a;
 	int		count;
-	int		max;
+	int	min_a;
+	int	min_b;
+	int	index;
 
 	tail = *a;
 	current_a = *a;
 	count = 0;
-	max = ft_max(*a);
+	min_a = ft_min(*a);
+	min_b = ft_min(*b);
 	while (tail->next)
 		tail = tail->next;
-	if ((*b)->content < (*a)->content && (*b)->content < tail->content)
+	if ((*b)->content < min_a)
+	{
+		count += place_small_to_top(a);
+		pa(a, b);
+		count++;
+	}
+	else if ((*b)->content < (*a)->content && (*b)->content > tail->content)
 	{
 		pa(a, b);
-		count += 1;
+		count++;
 	}
-	else if ((*b)->content > (*a)->content && (*b)->content > tail->content)
+	else if ((*b)->content > tail->content)
 	{
 		pa(a, b);
-		ra(a);
-		count += 2;
+		count++;
 	}
-	else if ((*b)->content > (*a)->content && (*b)->content < tail->content)
+	else
 	{
 		rra(a);
-		pa(a, b);
-		ra(a);
-		ra(a);
-		count += 3;
+		count++;
 	}
 	return (count);
 }
@@ -189,7 +237,7 @@ void	push_swap(t_stack **a, t_stack **b)
 {
 	int	size_a;
 
-	int count = 0; // NE PAS OUBLIER DENLEVER
+	int count = 2; // NE PAS OUBLIER DENLEVER
 	pb(a, b);
 	pb(a, b);
 	size_a = stack_size(*a);
@@ -200,10 +248,16 @@ void	push_swap(t_stack **a, t_stack **b)
 	}
 	count += place_big_to_top(b);
 	sort_three(a);
+	printf("STACK B SORTED :\n");
+	print_stack(*b);
+	printf("STACK A with 3 numbers :\n");
+	print_stack(*a);
 	while ((*b))
 	{
 		count += push_back_to_a(a, b);
 	}
-	printf("\nNombres de coups : %d\n", count);
+	count += place_small_to_top(a);
+	printf("TOTAL COUNT : %d\n", count);
+	printf("STACK A after the push_back_to_a :\n");
 	print_stack(*a);
 }
