@@ -6,7 +6,7 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:36:38 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/13 13:54:33 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/16 15:37:44 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int	skip_whitespace_and_get_sign(const char *str, long *index)
 			sign = -1;
 		(*index)++;
 	}
+	if (!ft_isdigit(str[*index]))
+		return (0);
 	return (sign);
 }
 
@@ -124,15 +126,10 @@ long	upgraded_atol(const char *str)
 
 	index = 0;
 	sign = skip_whitespace_and_get_sign(str, &index);
-	if (!ft_isdigit(str[index]))
-		return (0);
-	result = parse_number(str, &index); // converti char en int
-	if (!over_min_max(result, sign))
-		return (0);
+	result = parse_number(str, &index);
 	return (result * sign);
 }
-//___________________________________________FONCTIONS GLOBALES PARSING ARG ET LISTE
-// concatene et split en un tableau de tableau
+
 char	**parse_arguments(int argc, char **argv)
 {
 	char	*concatenated;
@@ -151,7 +148,7 @@ char	**parse_arguments(int argc, char **argv)
 	}
 	return (conc_argv);
 }
-// check si too long ou inf ou sup à int min/max et ajoute éléments à la liste
+
 t_stack	*create_stack_from_args(char **args)
 {
 	int		i;
@@ -169,6 +166,12 @@ t_stack	*create_stack_from_args(char **args)
 			return (NULL);
 		}
 		value = upgraded_atol(args[i]);
+		if (!over_min_max(value))
+		{
+			n_lstclear(&stack);
+			write(2, "Error\n", 6);
+			return (0);
+		}
 		add_node(&stack, value);
 		i++;
 	}

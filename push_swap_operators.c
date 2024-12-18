@@ -6,7 +6,7 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:50:22 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/16 14:36:52 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/17 12:26:48 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	pb(t_stack **a, t_stack **b)
 	}
 	write(1, "pb\n", 3);
 }
-void	ra(t_stack **a)
+void	ra(t_stack **a, int n)
 {
 	t_stack	*tmp;
 	t_stack	*new_head;
@@ -76,8 +76,10 @@ void	ra(t_stack **a)
 		(*a)->next = NULL; // coupe le lien
 		*a = new_head;
 	}
+	if (n == 0)
+		write(1, "ra\n", 3);
 }
-void	rb(t_stack **b)
+void	rb(t_stack **b, int n)
 {
 	t_stack	*tmp;
 	t_stack	*new_head;
@@ -92,15 +94,19 @@ void	rb(t_stack **b)
 		(*b)->next = NULL; // coupe le lien
 		*b = new_head;
 	}
+	if (n == 0)
+		write(1, "rb\n", 3);
 }
 
-void	rr(t_stack **a, t_stack **b)
+void	rr(t_stack **a, t_stack **b, int n)
 {
-	ra(a);
-	rb(b);
+	ra(a, 1);
+	rb(b, 1);
+	if (n == 1)
+		write(1, "rr\n", 3);
 }
 
-void	rra(t_stack **a)
+void	rra(t_stack **a, int n)
 {
 	t_stack	*tmp;
 	t_stack	*prev;
@@ -116,8 +122,10 @@ void	rra(t_stack **a)
 	tmp->next = *a;
 	prev->next = NULL;
 	*a = tmp;
+	if (n == 0)
+		write(1, "rra\n", 4);
 }
-void	rrb(t_stack **b)
+void	rrb(t_stack **b, int n)
 {
 	t_stack	*tmp;
 	t_stack	*prev;
@@ -133,9 +141,13 @@ void	rrb(t_stack **b)
 	tmp->next = *b;
 	prev->next = NULL;
 	*b = tmp;
+	if (n == 0)
+		write(1, "rrb\n", 4);
 }
-void	rrr(t_stack **a, t_stack **b)
+void	rrr(t_stack **a, t_stack **b, int n)
 {
-	rra(a);
-	rrb(b);
+	rra(a, 1);
+	rrb(b, 1);
+	if (n == 1)
+		write(1, "rrr\n", 4);
 }

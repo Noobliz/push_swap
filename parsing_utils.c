@@ -6,7 +6,7 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:27:18 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/13 13:32:02 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/16 16:08:24 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,10 @@ int	is_sign(char c)
 {
 	return (c == '-' || c == '+');
 }
-int	over_min_max(long int result, int sign)
+int	over_min_max(long int result)
 {
-	if ((result * sign) > 2147483647 || (result * sign) < -2147483648)
-	{
-		write(2, "Error\n", 6);
+	if ((result) > 2147483647 || (result) < -2147483648)
 		return (0);
-	}
 	return (1);
 }
 int	check_empty(char **argv)
@@ -70,7 +67,7 @@ int	calculate_total_length(int argc, char **argv)
 	total_len = 0;
 	while (i < argc)
 	{
-		total_len += ft_strlen(argv[i]) + 1; // +1 pour les espaces
+		total_len += ft_strlen(argv[i]) + 1;
 		i++;
 	}
 	return (total_len);
@@ -78,9 +75,9 @@ int	calculate_total_length(int argc, char **argv)
 
 int	valid_param(char **argv)
 {
-	int i;
-	int j;
-	int digit;
+	int	i;
+	int	j;
+	int	digit;
 
 	i = 0;
 	while (argv[i])
@@ -90,11 +87,9 @@ int	valid_param(char **argv)
 		while (argv[i][j])
 		{
 			if ((is_sign(argv[i][j])) && (j > 0 && argv[i][j - 1] != ' '))
-				// signe invalide
 				return (0);
 			if ((argv[i][j] < '0' || argv[i][j] > '9') && argv[i][j] != ' '
 				&& argv[i][j] != '-' && argv[i][j] != '+')
-				// caracteres invalides
 				return (0);
 			if (ft_isdigit(argv[i][j]))
 				digit++;

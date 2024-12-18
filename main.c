@@ -6,7 +6,7 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:17:33 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/16 15:05:47 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/17 13:51:04 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(int argc, char **argv)
 	init_struct(&data);
 	if (argc > 1)
 	{
+		int size = 0;
 		// Parsing du tableau
 		conc_argv = parse_arguments(argc, argv);
 		if (!conc_argv)
@@ -35,16 +36,24 @@ int	main(int argc, char **argv)
 			return (0);
 		if (is_sorted(alpha))
 		{
-			print_stack(alpha);
+			// print_stack(alpha);
 			n_lstclear(&alpha);
 			return (0);
 		}
-		printf("avant\n");
-		print_stack(alpha);
-
+		size = stack_size(alpha);
+		// printf("avant\n");
+		// print_stack(alpha);
+		sort_upto_five(&alpha, &beta, size);
+		// print_stack(alpha);
+		if (is_sorted(alpha))
+		{
+			// print_stack(alpha);
+			n_lstclear(&alpha);
+			return (0);
+		}
 		push_swap(&alpha, &beta);
-		printf("\napres\n");
-		print_stack(alpha);
+		// printf("\napres\n");
+		// print_stack(alpha);
 		n_lstclear(&alpha);
 		n_lstclear(&beta);
 		return (0);

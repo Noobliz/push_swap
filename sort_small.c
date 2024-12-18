@@ -6,13 +6,20 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:39:16 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/16 14:36:16 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/17 13:50:23 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "LIBFT/libft.h"
 #include "push_swap.h"
 
+void	sort_two(t_stack **stack)
+{
+	if (!is_sorted(*stack))
+		swap_top(stack);
+	else
+		return ;
+}
 void	sort_three(t_stack **stack)
 {
 	int	first;
@@ -26,13 +33,11 @@ void	sort_three(t_stack **stack)
 	third = (*stack)->next->next->content;
 	if (first > second && first > third)
 	{
-		ra(stack);
-		write(1, "ra\n", 3);
+		ra(stack, 0);
 	}
 	else if (second > first && second > third)
 	{
-		rra(stack);
-		write(1, "rra\n", 4);
+		rra(stack, 0);
 	}
 	first = (*stack)->content;
 	second = (*stack)->next->content;
@@ -76,7 +81,7 @@ void	move_small_to_top(t_stack **stack, int pos)
 	{
 		while (pos > 0)
 		{
-			ra(stack);
+			ra(stack, 0);
 			pos--;
 		}
 	}
@@ -85,7 +90,7 @@ void	move_small_to_top(t_stack **stack, int pos)
 		pos = size - pos;
 		while (pos > 0)
 		{
-			rra(stack);
+			rra(stack, 0);
 			pos--;
 		}
 	}
@@ -113,17 +118,14 @@ void	sort_five(t_stack **a, t_stack **b)
 
 void	sort_upto_five(t_stack **a, t_stack **b, int size)
 {
-	int	pos;
-
 	if (size == 5)
 		sort_five(a, b);
 	else if (size == 4)
 		sort_four(a, b);
 	else if (size == 3)
 		sort_three(a);
+	else if (size == 2)
+		sort_two(a);
 	else
-	{
-		pos = find_smallest(*a);
-		move_small_to_top(a, pos);
-	}
+		return ;
 }

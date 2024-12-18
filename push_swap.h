@@ -6,7 +6,7 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:53:03 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/16 15:24:30 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/17 13:28:17 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ void				swap_top(t_stack **stack);
 void				ss(t_stack **a, t_stack **b);
 void				pa(t_stack **a, t_stack **b);
 void				pb(t_stack **a, t_stack **b);
-void				ra(t_stack **a);
-void				rb(t_stack **b);
-void				rr(t_stack **a, t_stack **b);
-void				rra(t_stack **a);
-void				rrb(t_stack **b);
-void				rrr(t_stack **a, t_stack **b);
+void				ra(t_stack **a, int n);
+void				rb(t_stack **b, int n);
+void				rr(t_stack **a, t_stack **b, int n);
+void				rra(t_stack **a, int n);
+void				rrb(t_stack **b, int n);
+void				rrr(t_stack **a, t_stack **b, int n);
 
 //-----------------------------------------UTILS
 void				init_struct(t_cost *data);
@@ -70,6 +70,7 @@ t_stack				*create_stack_from_args(char **args);
 //-------------------------------------------------------------------ALGO
 void				push_swap(t_stack **a, t_stack **b);
 int					execute_best_move(t_stack **a, t_stack **b);
+void				sort_upto_five(t_stack **a, t_stack **b, int size);
 void				sort_three(t_stack **stack);
 t_stack				*best_move(t_stack *a, t_stack *b);
 t_cost				calculate_cost(t_stack *a, t_stack *b, int value);
