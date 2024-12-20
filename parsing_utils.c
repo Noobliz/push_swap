@@ -6,7 +6,7 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:27:18 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/16 16:08:24 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/19 13:47:33 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ int	is_sign(char c)
 {
 	return (c == '-' || c == '+');
 }
+
 int	over_min_max(long int result)
 {
 	if ((result) > 2147483647 || (result) < -2147483648)
 		return (0);
 	return (1);
 }
+
 int	check_empty(char **argv)
 {
 	int	i;
@@ -58,6 +60,7 @@ int	is_sorted(t_stack *a)
 	}
 	return (1);
 }
+
 int	calculate_total_length(int argc, char **argv)
 {
 	int	i;
@@ -71,33 +74,4 @@ int	calculate_total_length(int argc, char **argv)
 		i++;
 	}
 	return (total_len);
-}
-
-int	valid_param(char **argv)
-{
-	int	i;
-	int	j;
-	int	digit;
-
-	i = 0;
-	while (argv[i])
-	{
-		digit = 0;
-		j = 0;
-		while (argv[i][j])
-		{
-			if ((is_sign(argv[i][j])) && (j > 0 && argv[i][j - 1] != ' '))
-				return (0);
-			if ((argv[i][j] < '0' || argv[i][j] > '9') && argv[i][j] != ' '
-				&& argv[i][j] != '-' && argv[i][j] != '+')
-				return (0);
-			if (ft_isdigit(argv[i][j]))
-				digit++;
-			j++;
-		}
-		if (digit == 0)
-			return (0);
-		i++;
-	}
-	return (1);
 }

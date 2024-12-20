@@ -1,59 +1,64 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algo_utils.c                                       :+:      :+:    :+:   */
+/*   sort_small_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 14:02:39 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/19 13:48:40 by lguiet           ###   ########.fr       */
+/*   Created: 2024/12/19 13:26:10 by lguiet            #+#    #+#             */
+/*   Updated: 2024/12/19 13:46:25 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	min_op(int x, int y)
-{
-	if (x < y)
-		return (x);
-	return (y);
-}
-
-int	max_op(int x, int y)
-{
-	if (x > y)
-		return (x);
-	return (y);
-}
-
-int	ft_min(t_stack *stack)
+int	find_smallest(t_stack *stack)
 {
 	int	min;
+	int	i;
+	int	pos;
 
 	min = stack->content;
+	i = 0;
+	pos = 0;
 	while (stack)
 	{
 		if (stack->content < min)
 		{
 			min = stack->content;
+			pos = i;
 		}
 		stack = stack->next;
+		i++;
 	}
-	return (min);
+	return (pos);
 }
 
-int	ft_max(t_stack *stack)
+void	move_small_to_top(t_stack **stack, int pos)
 {
-	int	max;
+	t_stack	*tmp;
+	int		size;
 
-	max = stack->content;
-	while (stack)
+	tmp = *stack;
+	size = 0;
+	if (pos == 0)
+		return ;
+	size = stack_size(*stack);
+	if (pos <= size / 2)
 	{
-		if (stack->content > max)
+		while (pos > 0)
 		{
-			max = stack->content;
+			ra(stack, 0);
+			pos--;
 		}
-		stack = stack->next;
 	}
-	return (max);
+	else
+	{
+		pos = size - pos;
+		while (pos > 0)
+		{
+			rra(stack, 0);
+			pos--;
+		}
+	}
 }

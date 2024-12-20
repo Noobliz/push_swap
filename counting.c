@@ -6,7 +6,7 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 14:05:17 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/18 12:15:26 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/19 13:44:55 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	value_index(t_stack *stack, int value)
 	}
 	return (-1);
 }
-int	get_insert_position(t_stack *b, int value)
+
+static int	get_insert_position(t_stack *b, int value)
 {
 	int		pos;
 	int		size;
@@ -73,12 +74,13 @@ t_cost	calculate_cost(t_stack *a, t_stack *b, int value)
 				cost.rrb));
 	return (cost);
 }
+
 t_stack	*best_move(t_stack *a, t_stack *b)
 {
-	t_stack *current;
-	t_stack *best;
-	t_cost cost;
-	int best_cost;
+	t_stack	*current;
+	t_stack	*best;
+	t_cost	cost;
+	int		best_cost;
 
 	best_cost = 2147483647;
 	current = a;

@@ -6,56 +6,61 @@
 /*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:17:33 by lguiet            #+#    #+#             */
-/*   Updated: 2024/12/17 13:51:04 by lguiet           ###   ########.fr       */
+/*   Updated: 2024/12/19 14:29:09 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+static int	is_valid(t_stack *alpha)
+{
+	if (!not_duplicated(alpha))
+		return (0);
+	if (is_sorted(alpha))
+	{
+		n_lstclear(&alpha);
+		return (0);
+	}
+	return (1);
+}
+
+static void	clear_all(t_stack **alpha, t_stack **beta)
+{
+	n_lstclear(alpha);
+	n_lstclear(beta);
+}
+
+static void	sort_to_five_and_clear(t_stack **alpha, t_stack **beta, int size)
+{
+	sort_upto_five(alpha, beta, size);
+	clear_all(alpha, beta);
+}
+
 int	main(int argc, char **argv)
 {
-	char **conc_argv;
-	t_stack *alpha;
-	t_stack *beta;
-	t_cost data;
+	char	**conc_argv;
+	t_stack	*alpha;
+	t_stack	*beta;
+	int		size;
 
 	alpha = NULL;
 	beta = NULL;
-	init_struct(&data);
-	if (argc > 1)
+	if (argc < 2)
+		return (0);
+	conc_argv = parse_arguments(argc, argv);
+	if (!conc_argv)
+		return (0);
+	alpha = create_stack_from_args(conc_argv);
+	free_char_array(conc_argv);
+	if (!alpha || !is_valid(alpha))
+		return (0);
+	size = stack_size(alpha);
+	if (size < 6)
 	{
-		int size = 0;
-		// Parsing du tableau
-		conc_argv = parse_arguments(argc, argv);
-		if (!conc_argv)
-			return (0);
-		// Parsing de la liste
-		alpha = create_stack_from_args(conc_argv);
-		free_char_array(conc_argv); // Libère `conc_argv` après son utilisation
-		if (!alpha)
-			return (0);
-		if (is_sorted(alpha))
-		{
-			// print_stack(alpha);
-			n_lstclear(&alpha);
-			return (0);
-		}
-		size = stack_size(alpha);
-		// printf("avant\n");
-		// print_stack(alpha);
-		sort_upto_five(&alpha, &beta, size);
-		// print_stack(alpha);
-		if (is_sorted(alpha))
-		{
-			// print_stack(alpha);
-			n_lstclear(&alpha);
-			return (0);
-		}
-		push_swap(&alpha, &beta);
-		// printf("\napres\n");
-		// print_stack(alpha);
-		n_lstclear(&alpha);
-		n_lstclear(&beta);
+		sort_to_five_and_clear(&alpha, &beta, size);
 		return (0);
 	}
+	push_swap(&alpha, &beta);
+	clear_all(&alpha, &beta);
+	return (0);
 }
