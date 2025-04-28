@@ -10,6 +10,6 @@
 
 ## Skills developed
 - Deep understanding of sorting algorithms and their adaptations to specific constraints.
-- Advanced algorithmic thinking: problem decomposition, optimization strategies (greedy methods, radix sort, small dataset specific strategies).
+- Advanced algorithmic thinking: problem decomposition, optimization strategies (greedy methods, small dataset specific strategies).
 - Careful dynamic memory management and protection against undefined behavior.
 - Writing structured, modular, and highly optimized C code compliant with the 42 coding standards.
